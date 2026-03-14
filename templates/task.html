@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Задача</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>{{ task.title }}</h1>
+    <p><strong>Дата:</strong> {{ task.date }}</p>
+    <p><strong>Описание:</strong> {{ task.description }}</p>
+    <a href="/tasks" class="back-btn">Назад к задачам</a>
+    <a href="/edit_task/{{ task.id }}" class="edit-btn">Редактировать</a>
+</div>
+</body>
+</html>

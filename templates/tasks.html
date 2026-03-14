@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>To-Do List</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+<script>
+
+function toggleDescription(id){
+
+let el = document.getElementById("desc"+id)
+
+if(el.style.display==="none"){
+el.style.display="block"
+}
+else{
+el.style.display="none"
+}
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>To-Do List</h1>
+
+<a class="logout" href="/logout">Выйти</a>
+
+</div>
+
+
+<div class="container">
+
+
+<div class="sort">
+
+<a href="/tasks?sort=alpha">Сортировать А-Я</a>
+
+<a href="/tasks?sort=date">Сортировать по дате</a>
+
+</div>
+
+
+<form class="add" method="POST" action="/add_task">
+
+<input name="title" placeholder="Новая задача" required>
+
+<input type="date" name="date">
+
+<button>+</button>
+
+</form>
+
+
+
+{% for task in tasks %}
+
+
+<div class="task {% if task.completed %}done{% endif %}" onclick="toggleDescription({{task.id}})">
+
+
+<form method="POST" action="/complete/{{task.id}}">
+<button class="check">✔</button>
+</form>
+
+
+<div class="title">
+
+{{task.title}}
+
+</div>
+
+
+<div class="right">
+
+<span>{{task.date}}</span>
+
+
+<form method="POST" action="/favorite/{{task.id}}">
+<button class="star">
+
+{% if task.favorite %}⭐{% else %}☆{% endif %}
+
+</button>
+</form>
+
+
+<form method="POST" action="/delete/{{task.id}}">
+<button class="delete">🗑</button>
+</form>
+
+</div>
+
+</div>
+
+
+<div id="desc{{task.id}}" class="description" style="display:none">
+
+<form method="POST" action="/update_description/{{task.id}}">
+
+<textarea name="description" placeholder="Описание задачи...">{{task.description}}</textarea>
+
+<button>Сохранить</button>
+
+</form>
+
+</div>
+
+
+{% endfor %}
+
+</div>
+
+</body>
+
+</html>
